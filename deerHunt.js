@@ -13,10 +13,10 @@
 
     const Reindeer = (function(refreshTime, jumpPages) {
         refreshTime = refreshTime || 5000;
-        let searchInterval = null;
-        let jumpPageTimeout = null;
+        var searchInterval = null;
+        var jumpPageTimeout = null;
 
-        const lookForReindeer = function() {
+        var lookForReindeer = function() {
             console.log('Szukam reniferka');
             let found = false;
             const reinder = document.querySelector('.mc-btn--primary');
@@ -45,11 +45,12 @@
                 if (location.href !== 'https://www.pepper.pl/') {
                     console.log('Wracam na stronę gówną');
                     location.href = 'https://www.pepper.pl/';
+                } else {
+                    const item = cards[
+                        Math.floor(Math.random() * (cards.length - 1))
+                    ].querySelector('a');
+                    item.click();
                 }
-                const item = cards[
-                    Math.floor(Math.random() * (cards.length - 1))
-                ].querySelector('a');
-                item.click();
             }, timeout * 1000);
         }
 
