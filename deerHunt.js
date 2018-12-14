@@ -1,37 +1,34 @@
 // ==UserScript==
 // @name         Pepper reniferek
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @version      0.2
+// @description  reniferowe kłusownictwo
+// @author       urban07
 // @match        https://www.pepper.pl/*
 // @grant        none
+// @require      http://code.jquery.com/jquery-latest.min.js
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    const Reindeer = (function(refreshTime, jumpPages) {
-        refreshTime = refreshTime || 5000;
-        var searchInterval = null;
+    const Reindeer = (function(jumpPages) {
         var jumpPageTimeout = null;
 
-        var lookForReindeer = function() {
-            console.log('Szukam reniferka');
-            let found = false;
-            const reinder = document.querySelector('.mc-btn--primary');
-            if (reinder) {
-                found = true;
-                clearInterval(searchInterval);
-                clearTimeout(jumpPageTimeout);
-                console.log('Jest reniferek! Klikam!');
-                reinder.click();
-                console.log('Za 60 sekund przeładuję stronę');
-                setTimeout(() => {
-                    location.reload();
-                }, 60000);
-            }
-        };
+        $( document ).ready(function() {
+            $(document).on('DOMNodeInserted', function(reindeer) {
+                if ( $(reindeer.target).hasClass('mc-btn--primary') ) {
+                    clearTimeout(jumpPageTimeout);
+                    console.log('Jest reniferek! Klikam!');
+                    $(reindeer).click();
+                    console.log('Za 60 sekund przeładuję stronę');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 60000);
+                }
+            });
+        });
+
 
         if (jumpPages) {
             const cards = document.querySelectorAll(
@@ -54,6 +51,5 @@
             }, timeout * 1000);
         }
 
-        searchInterval = setInterval(lookForReindeer, 5000);
-    })(2000, true);
+    })(true);
 })();
