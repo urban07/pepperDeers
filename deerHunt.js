@@ -20,7 +20,7 @@
                 if ( $(reindeer.target).hasClass('mc-btn--primary') ) {
                     clearTimeout(jumpPageTimeout);
                     console.log('Jest reniferek! Klikam!');
-                    $(reindeer).click();
+                    $(reindeer.target).click();
                     console.log('Za 60 sekund przeładuję stronę');
                     setTimeout(() => {
                         location.reload();
