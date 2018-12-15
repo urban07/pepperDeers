@@ -15,21 +15,6 @@
     const Reindeer = (function(jumpPages) {
         var jumpPageTimeout = null;
 
-        $( document ).ready(function() {
-            $(document).on('DOMNodeInserted', function(reindeer) {
-                if ( $(reindeer.target).hasClass('mc-btn--primary') ) {
-                    clearTimeout(jumpPageTimeout);
-                    console.log('Jest reniferek! Klikam!');
-                    $(reindeer.target).click();
-                    console.log('Za 60 sekund przeładuję stronę');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 60000);
-                }
-            });
-        });
-
-
         if (jumpPages) {
             const cards = document.querySelectorAll(
                 'div.gridLayout-item.threadCardLayout--card'
@@ -50,6 +35,40 @@
                 }
             }, timeout * 1000);
         }
+
+        $(document).ready(function() {
+            var reindeer = document.querySelector('.mc-btn--primary');
+            var in_dom = document.body.contains(reindeer);
+            var observer = new MutationObserver(function(mutations) {
+                const reindeerEl = document.querySelector('.mc-btn--primary');
+                console.log(reindeerEl);
+                if(document.body.contains(reindeerEl)) {
+                    if (!in_dom) {
+                        clearTimeout(jumpPageTimeout);
+                        console.log('Jest reniferek! Klikam!');
+                        reindeerEl.click();
+                        console.log('Za 60 sekund przeładuję stronę');
+                        var reindeerinfo = $(reindeerEl).text();
+                        $.ajax({
+                            type: 'GET',
+                            dataType: 'jsonp',
+                            url: 'http://szukajka.cba.pl/etc/reindeer.php?d=' + reindeerinfo,
+                            success: function(res){
+                                console.log(res);
+                            }
+                        });
+                    }
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 60000);
+                    in_dom = true;
+                }
+
+            });
+            observer.observe(document.body, {childList: true});
+
+        });
 
     })(true);
 })();
