@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Pepper reniferek
+// @name         Pepper reniferek github
 // @namespace    http://tampermonkey.net/
 // @version      0.2
 // @description  reniferowe kłusownictwo
@@ -35,7 +35,7 @@
             }, timeout * 1000);
         }
 
-        $(document).ready(function() {
+        window.onload = function() {
             var reindeer = document.querySelector('.mc-btn--primary');
             var in_dom = document.body.contains(reindeer);
             var observer = new MutationObserver(function(mutations) {
@@ -58,7 +58,7 @@
             });
             observer.observe(document.body, {childList: true});
 
-        });
+        }
 
     })(true);
 })();
