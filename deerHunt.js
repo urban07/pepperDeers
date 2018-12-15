@@ -6,7 +6,6 @@
 // @author       urban07
 // @match        https://www.pepper.pl/*
 // @grant        none
-// @require      http://code.jquery.com/jquery-latest.min.js
 // ==/UserScript==
 
 (function() {
@@ -48,15 +47,6 @@
                         console.log('Jest reniferek! Klikam!');
                         reindeerEl.click();
                         console.log('Za 60 sekund przeładuję stronę');
-                        var reindeerinfo = $(reindeerEl).text();
-                        $.ajax({
-                            type: 'GET',
-                            dataType: 'jsonp',
-                            url: 'http://szukajka.cba.pl/etc/reindeer.php?d=' + reindeerinfo,
-                            success: function(res){
-                                console.log(res);
-                            }
-                        });
                     }
 
                     setTimeout(() => {
